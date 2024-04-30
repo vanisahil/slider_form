@@ -1,25 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+// App.js
+import React, { useEffect, useState } from 'react';
+import Page1 from './Page1';
+import Page2 from './Page2';
+import Page3 from './Page3';
+import './index.js';
 
-function App() {
+const App = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      handleNext();
+    }, 3000);
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []);
+
+  const handleNext = () => {
+    setCurrentPage((prevPage) => (prevPage < 3 ? prevPage + 1 : 1));
+  };
+
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      {currentPage === 1 && <Page1 />}
+      {currentPage === 2 && <Page2 />}
+      {currentPage === 3 && <Page3 />}
     </div>
   );
-}
+};
 
 export default App;
